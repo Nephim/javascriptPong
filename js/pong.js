@@ -28,6 +28,7 @@ let ballSpeed = 3;
 let upPressed = false;
 let downPressed = false;
 let pause = false;
+let sound = true;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -41,6 +42,8 @@ function keyDownHandler(event) {
 		downPressed = true;
 	} else if (event.key === "p") {
 		pause = !pause;
+	} else if (event.key === "m") {
+		sound = !sound;
 	}
 }
   
@@ -137,7 +140,7 @@ function draw()
 	if(ballY > canvas.height - BALL_RADIUS || ballY < 0 + BALL_RADIUS) // Ball hit detection top and bottom
 	{
 		dy = -dy;
-		wallPong.play();
+		if (sound) wallPong.play();
 	}
 	
 	ballX += dx
@@ -165,7 +168,7 @@ function draw()
 			dx -= 0.1;
 		}
 		dx = - dx;
-		paddlePong.play();
+		if (sound) paddlePong.play();
 	} else if (ballX > enemyX && ballY > enemyY - paddleHeight / 2 && ballY < enemyY + paddleHeight / 2)
 	{
 		if (ballY > enemyY) {
@@ -176,18 +179,18 @@ function draw()
 			dx += 0.1;
 		}
 		dx = - dx;
-		paddlePong.play();
+		if (sound) paddlePong.play();
 	}
 
 	if (ballX < 0)
 	{
 		resetGame();
 		enemyScore += 1;
-		scorePong.play();
+		if (sound) scorePong.play();
 	} else if (ballX > canvas.width) {
 		resetGame();
 		playerScore += 1;
-		scorePong.play();
+		if (sound) scorePong.play();
 	}
 
 	drawLine();
